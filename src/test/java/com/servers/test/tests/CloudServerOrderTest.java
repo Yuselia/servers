@@ -10,9 +10,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class CloudServerOrderTest extends TestBase {
-  public static LoginPage loginPage;
-  public static MainPage mainPage;
-  public static String[] locations = {"Amsterdam - az2", "Amsterdam - az3", "Amsterdam - az4",
+  private static LoginPage loginPage;
+  private static MainPage mainPage;
+  private static final String[] locations = {"Amsterdam - az2", "Amsterdam - az3", "Amsterdam - az4",
           "Dallas", "Luxembourg", "San Jose", "Singapore", "Washington"};
   private String location;
 
@@ -44,13 +44,13 @@ public class CloudServerOrderTest extends TestBase {
     String price = createCloudServerPage.chooseRandomConfigurationAndGetPrice();
     createCloudServerPage.checkPrice(price);
     if (!image.contains("Windows")) {
-      createCloudServerPage.chooseSSHMethod()
+      createCloudServerPage
               .choosePassword()
               .chooseSSHKey();
     }
     createCloudServerPage.setBackupCopies(4)
             .setAddIpAddressCheckbox()
-            .setName("test name");
-            String s = "";
+            .setName("test name")
+            .createButtonClick();
   }
 }

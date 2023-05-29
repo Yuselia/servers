@@ -9,15 +9,14 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.servers.test.Role.Abuse;
 
 public class ContactsPage {
-  public WebDriver driver;
-  public WebDriverWait wait;
+  protected WebDriver driver;
+  protected WebDriverWait wait;
 
   public ContactsPage(WebDriver driver, WebDriverWait wait) {
     PageFactory.initElements(driver, this);
@@ -83,7 +82,7 @@ public class ContactsPage {
       }
     }
     deletingElement.findElement(By.xpath(".//td[6]")).click();
-    confirmationDialog.isDisplayed();
+    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@aria-label, 'Confirmation')]")));
     return this;
   }
 

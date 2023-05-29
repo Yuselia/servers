@@ -1,7 +1,7 @@
 package com.servers.test;
 
-import com.servers.test.pages.MainPage;
 import com.servers.test.pages.LoginPage;
+import com.servers.test.pages.MainPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,12 +12,12 @@ import java.util.concurrent.TimeUnit;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 public class TestBase {
-  protected static final String main_url = ConfigProperties.getProperty("main_url");
-  private static final String login_url = main_url + "/login";
-  private static final int timeout = Integer.valueOf(ConfigProperties.getProperty("timeout_seconds"));
-  public static WebDriver driver;
-  public static WebDriverWait wait;
-  public static User user = new User("yuselia+ask_ev@yandex.ru", "TestPassword!@#$");
+  public static final String main_url = ConfigProperties.getProperty("main_url");
+  protected static final int timeout = Integer.valueOf(ConfigProperties.getProperty("timeout_seconds"));
+  protected static WebDriver driver;
+  protected static WebDriverWait wait;
+  protected static String login_url = main_url + "/login";
+  protected static User user = new User("yuselia+ask_ev@yandex.ru", "TestPassword!@#$");
 
   protected void setUp() {
     driver = new FirefoxDriver();

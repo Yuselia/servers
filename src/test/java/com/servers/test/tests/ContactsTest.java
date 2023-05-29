@@ -18,12 +18,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class ContactsTest extends TestBase {
-  public static String contacts_url = main_url + "/profile/contacts";
-  public static LoginPage loginPage;
-  public static ContactsPage contactsPage;
-  public static ContactEditorPage contactEditorPage;
-  public static ContactInfoPage contactInfoPage;
-  private static Contact contact1 = new Contact("Jon", Role.Abuse)
+  private static LoginPage loginPage;
+  private static ContactsPage contactsPage;
+  private static ContactEditorPage contactEditorPage;
+  private static ContactInfoPage contactInfoPage;
+  private static final String contacts_url = main_url + "/profile/contacts";
+  private static final Contact contact1 = new Contact("Jon", Role.Abuse)
           .setLastName("Smith")
           .setMiddleName("Alexandrovich")
           .setEmail("test@test.ru")
@@ -34,9 +34,9 @@ public class ContactsTest extends TestBase {
           .setJobRole("Job role")
           .setNickname("Agent Smith")
           .setComments("Test Comments\nTest Comments\nTest Comments\n1234567890-=!@#$%^*()_+")
-          .setContactDetails(new Contact.ContactDetails("URL", "https://test"))
+          .setContactDetails(new Contact.ContactDetails("Fax", "1234"))
           .setContactDetails(new Contact.ContactDetails("Work phone", "+1 (234) 567-80"));
-  private static Contact contact2 = new Contact("Tom", Role.Emergency)
+  private static final Contact contact2 = new Contact("Tom", Role.Emergency)
           .setLastName("Hardy")
           .setMiddleName("Edvard")
           .setEmail("test1@test.ru")
@@ -79,7 +79,7 @@ public class ContactsTest extends TestBase {
 
     openContactsPage();
     int afterCount = contactsPage.getCountOfContacts();
-    assertThat("Количество групп увеличилось на единицу", afterCount, is(beforeCount + 1));
+    assertThat("Количество контактов увеличилось на единицу", afterCount, is(beforeCount + 1));
     assertThat("Присутствует контакт с указанным именем", contactsPage.isContactExist(contactName), is(true));
   }
 
@@ -101,7 +101,7 @@ public class ContactsTest extends TestBase {
 
     openContactsPage();
     int afterCount = contactsPage.getCountOfContacts();
-    assertThat("Количество групп не изменилось", afterCount, is(beforeCount));
+    assertThat("Количество контактов не изменилось", afterCount, is(beforeCount));
     assertThat("Присутствует контакт с указанным именем",
             contactsPage.isContactExist(contact2.getFirstName() + " " + contact2.getLastName()), is(true));
   }
@@ -120,7 +120,7 @@ public class ContactsTest extends TestBase {
             .refreshButtonClick();
 
     int afterCount = contactsPage.getCountOfContacts();
-    assertThat("Количество групп уменьшилось на единицу", afterCount, is(beforeCount - 1));
+    assertThat("Количество контактов уменьшилось на единицу", afterCount, is(beforeCount - 1));
   }
 
   private void createGroup(Contact contact) {
@@ -157,6 +157,7 @@ public class ContactsTest extends TestBase {
             .checkInput("Role", contact.getRole())
             .checkInput("Company", contact.getCompany())
             .checkInput("Job title", contact.getJobTitle())
-            .checkInput("Comments", contact.getComments());
+            .checkInput("Comments", contact.getComments())
+            .checkContactDetails(contact.getContactDetails());
   }
 }

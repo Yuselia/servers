@@ -13,8 +13,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 public class ContactEditorPage {
-  public WebDriver driver;
-  public WebDriverWait wait;
+  protected WebDriver driver;
+  protected WebDriverWait wait;
 
   public ContactEditorPage(WebDriver driver, WebDriverWait wait) {
     PageFactory.initElements(driver, this);
@@ -159,8 +159,10 @@ public class ContactEditorPage {
     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", contactNameSelectButton);
     contactNameSelectButton.click();
     driver.findElement(By.xpath("//*[text() = '" + contactDetails.getName() + "']")).click();
-    driver.findElement(By.xpath("//div[contains(@id, 'contacts')]//input[contains(@name, 'contacts[" + index + "].value')]"))
-            .sendKeys(contactDetails.getValue());
+    WebElement input = driver.findElement(By.xpath("//div[contains(@id, 'contacts')]" +
+            "//input[contains(@name, 'contacts[" + index + "].value')]"));
+    input.clear();
+    input.sendKeys(contactDetails.getValue());
     return this;
   }
 

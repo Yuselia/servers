@@ -12,10 +12,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class LoginTest extends TestBase {
-  public static LoginPage loginPage;
-  public static MainPage mainPage;
-  public static User user = TestBase.user;
-  private static String errorMessage = "Incorrect email or password";
+  private static LoginPage loginPage;
+  private static MainPage mainPage;
+  private static final User user = TestBase.user;
+  private static final String errorMessage = "Incorrect email or password";
 
   @BeforeMethod
   public void setUp() {
@@ -32,7 +32,6 @@ public class LoginTest extends TestBase {
   @Test(description = "Успешный логин. Логаут")
   public void loginTest() {
     mainPage = login(loginPage, user);
-    mainPage.closeModalWindowButton();
     logout(mainPage);
   }
 

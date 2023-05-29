@@ -1,5 +1,6 @@
 package com.servers.test.pages;
 
+import com.servers.test.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -16,8 +17,8 @@ import static org.hamcrest.Matchers.is;
 
 
 public class CreateCloudServerPage {
-  public WebDriver driver;
-  public WebDriverWait wait;
+  protected WebDriver driver;
+  protected WebDriverWait wait;
 
   public CreateCloudServerPage(WebDriver driver, WebDriverWait wait) {
     PageFactory.initElements(driver, this);
@@ -49,7 +50,7 @@ public class CreateCloudServerPage {
   @FindBy(xpath = "//*[contains(@name, 'backup_copies')]")
   private WebElement backupCopies;
 
-  @FindBy(xpath = "//h4[text() = 'Add IPv6 address")
+  @FindBy(xpath = "//h4[text() = 'Add IPv6 address']")
   private WebElement addIpAddressCheckbox;
 
   @FindBy(name = "name")
@@ -73,7 +74,6 @@ public class CreateCloudServerPage {
     if (!text.contains("Windows")) {
       assertThat(isSSHMethodsDisplayed(), is(true));
       assertThat(isSSHKeysDisplayed(), is(true));
-      //wait.until(ExpectedConditions.presenceOfElementLocated(By.id("ssh_key_fingerprint")));
     }
     else {
       assertThat(isSSHMethodsDisplayed(), is(false));
@@ -92,16 +92,20 @@ public class CreateCloudServerPage {
   }
 
   public CreateCloudServerPage checkPrice(String price) {
-    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text() = 'Total price: " + price + " per month']")));
+    WebElement element = driver.findElement(By.xpath("//span[text() = 'Total price']"));
+    WebElement priceElement = element.findElement(By.xpath("./..//b"));
+    assertThat("Отображается верная итоговая цена", priceElement.getText(), is(price));
     return this;
   }
 
   public CreateCloudServerPage chooseSSHMethod() {
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", sshMethod);
     sshMethod.click();
     return this;
   }
 
   public CreateCloudServerPage choosePassword() {
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", password);
     password.click();
     return this;
   }
@@ -118,6 +122,7 @@ public class CreateCloudServerPage {
   }
 
   public CreateCloudServerPage setAddIpAddressCheckbox() {
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", addIpAddressCheckbox);
     addIpAddressCheckbox.click();
     return this;
   }
@@ -128,10 +133,10 @@ public class CreateCloudServerPage {
     return this;
   }
 
-  public CreateCloudServerPage createButtonClick() {
+  public PaymentMethodsPage createButtonClick() {
     createButton.click();
-    wait.until(ExpectedConditions.urlToBe("https://portal.servers.com/payment/methods"));
-    return this;
+    wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/payment/methods"));
+    return new PaymentMethodsPage(driver, wait);
   }
 
   public boolean isSSHMethodsDisplayed() {

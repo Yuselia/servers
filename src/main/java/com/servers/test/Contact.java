@@ -15,7 +15,7 @@ public class Contact {
   private String jobRole;
   private String nickname;
   private String comments;
-  private List<ContactDetails> contactDetails = new ArrayList<ContactDetails>();
+  private List<ContactDetails> contactDetails = new ArrayList<>();
 
   public Contact(String firstName, Role role) {
     this.firstName = firstName;
