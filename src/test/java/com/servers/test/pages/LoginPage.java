@@ -1,9 +1,11 @@
 package com.servers.test.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage {
@@ -41,10 +43,10 @@ public class LoginPage {
     return this;
   }
 
-  public AccountInfoPage loginButtonClick() {
+  public MainPage loginButtonClick() {
     submitButton.click();
-   // wait.until(ExpectedConditions.invisibilityOfElementLocated((By)loginField));
-    return new AccountInfoPage(driver, wait);
+    wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("email")));
+    return new MainPage(driver, wait);
   }
 
   public LoginPage incorrectLoginButtonClick() {

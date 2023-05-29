@@ -1,6 +1,6 @@
 package com.servers.test;
 
-import com.servers.test.pages.AccountInfoPage;
+import com.servers.test.pages.MainPage;
 import com.servers.test.pages.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -32,16 +32,16 @@ public class TestBase {
     driver.quit();
   }
 
-  protected AccountInfoPage login(LoginPage loginPage, User user) {
-    AccountInfoPage accountInfoPage = loginPage.inputLogin(user.getLogin())
+  protected MainPage login(LoginPage loginPage, User user) {
+    MainPage mainPage = loginPage.inputLogin(user.getLogin())
             .inputPassword(user.getPassword())
             .loginButtonClick();
-    accountInfoPage.checkAccountName(user.getLogin());
-    return accountInfoPage;
+    mainPage.checkAccountName(user.getLogin());
+    return mainPage;
   }
 
-  protected LoginPage logout(AccountInfoPage accountInfoPage) {
-    return accountInfoPage.accountButtonClick()
+  protected LoginPage logout(MainPage mainPage) {
+    return mainPage.accountButtonClick()
             .logoutButtonClick();
   }
 }

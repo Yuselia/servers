@@ -2,7 +2,7 @@ package com.servers.test.tests;
 
 import com.servers.test.TestBase;
 import com.servers.test.User;
-import com.servers.test.pages.AccountInfoPage;
+import com.servers.test.pages.MainPage;
 import com.servers.test.pages.LoginPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.is;
 
 public class LoginTest extends TestBase {
   public static LoginPage loginPage;
-  public static AccountInfoPage accountInfoPage;
+  public static MainPage mainPage;
   public static User user = TestBase.user;
   private static String errorMessage = "Incorrect email or password";
 
@@ -31,9 +31,9 @@ public class LoginTest extends TestBase {
 
   @Test(description = "Успешный логин. Логаут")
   public void loginTest() {
-    accountInfoPage = login(loginPage, user);
-    accountInfoPage.closeModalWindowButton();
-    logout(accountInfoPage);
+    mainPage = login(loginPage, user);
+    mainPage.closeModalWindowButton();
+    logout(mainPage);
   }
 
   @Test(description = "Негативный тест логина")
