@@ -5,15 +5,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
-
-import static com.codeborne.selenide.files.DownloadActions.click;
 
 public class ContactEditorPage {
   public WebDriver driver;
@@ -67,40 +64,53 @@ public class ContactEditorPage {
   @FindBy(xpath = "//div[contains(@id, 'contacts')]//div[contains(@class, 'select__indicators')]")
   private List<WebElement> contactNameSelectButtons;
 
-  @FindBy(xpath = "//button[contains(@title, 'Create')]")
-  private WebElement createButton;
+  @FindBy(xpath = "//button[contains(@type, 'submit')]")
+  private WebElement submitButton;
 
   public ContactEditorPage inputFirstName(String firstName) {
+    fname.clear();
     fname.sendKeys(firstName);
     return this;
   }
 
   public ContactEditorPage inputLastName(String lastName) {
+    lname.clear();
     lname.sendKeys(lastName);
     return this;
   }
 
   public ContactEditorPage inputMiddleName(String middlename) {
+    this.middlename.clear();
     this.middlename.sendKeys(middlename);
     return this;
   }
 
   public ContactEditorPage inputEmail(String email) {
+    this.email.clear();
     this.email.sendKeys(email);
     return this;
   }
 
   public ContactEditorPage inputSecondaryEmail(String email) {
+    email2.clear();
     email2.sendKeys(email);
     return this;
   }
 
   public ContactEditorPage inputPhone(String phone) {
+    this.phone.clear();
     this.phone.sendKeys(phone);
     return this;
   }
 
   public ContactEditorPage setRole(String role) {
+    List<WebElement> elements = this.role.findElements(By.xpath(".//child::input"));
+    for (int i = 1; i < elements.size(); i ++) {
+      if (elements.get(i).getAttribute("checked")!=null) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elements.get(i));
+        elements.get(i).click();
+      }
+    }
     WebElement element = this.role.findElement(By.xpath(".//*[text() = '" + role + "']"));
     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     element.click();
@@ -108,26 +118,31 @@ public class ContactEditorPage {
   }
 
   public ContactEditorPage inputCompany(String company) {
+    this.company.clear();
     this.company.sendKeys(company);
     return this;
   }
 
   public ContactEditorPage inputJobTitle(String title) {
+    this.jobTitle.clear();
     this.jobTitle.sendKeys(title);
     return this;
   }
 
   public ContactEditorPage inputJobRole(String jobRole) {
+    this.jobRole.clear();
     this.jobRole.sendKeys(jobRole);
     return this;
   }
 
   public ContactEditorPage inputNickname(String nickname) {
+    this.nickname.clear();
     this.nickname.sendKeys(nickname);
     return this;
   }
 
   public ContactEditorPage inputComments(String comments) {
+    this.comments.clear();
     this.comments.sendKeys(comments);
     return this;
   }
@@ -149,8 +164,8 @@ public class ContactEditorPage {
     return this;
   }
 
-  public ContactInfoPage createButtonClick() {
-    createButton.click();
+  public ContactInfoPage submitButtonClick() {
+    submitButton.click();
     wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[name=fname]")));
     wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//*[text() = 'Contact info']")));
     return new ContactInfoPage(driver, wait);

@@ -36,13 +36,26 @@ public class ContactsTest extends TestBase {
           .setComments("Test Comments\nTest Comments\nTest Comments\n1234567890-=!@#$%^*()_+")
           .setContactDetails(new Contact.ContactDetails("URL", "https://test"))
           .setContactDetails(new Contact.ContactDetails("Work phone", "+1 (234) 567-80"));
+  private static Contact contact2 = new Contact("Tom", Role.Emergency)
+          .setLastName("Hardy")
+          .setMiddleName("Edvard")
+          .setEmail("test1@test.ru")
+          .setSecondaryEmail("test3@test.ru")
+          .setPhone("786876876979879")
+          .setCompany("Second Company")
+          .setJobTitle("Edited Job title")
+          .setJobRole("Edited Job role")
+          .setNickname("Tom")
+          .setComments("1234567890-=!@#$%^*()_+\nNew comment")
+          .setContactDetails(new Contact.ContactDetails("Cellphone", "123"))
+          .setContactDetails(new Contact.ContactDetails("Fax", "+12345"));
 
   @BeforeClass
   public void setUp() {
     super.setUp();
     loginPage = new LoginPage(driver, wait);
     loginPage.declineCookiesIfNeed();
-    login(loginPage);
+    login(loginPage, TestBase.user);
   }
 
   @BeforeMethod
@@ -59,24 +72,38 @@ public class ContactsTest extends TestBase {
 
   @Test(description = "Добавление контакта")
   public void addContactTest() {
+    String contactName = contact1.getFirstName() + " " + contact1.getLastName();
     int beforeCount = contactsPage.getCountOfContacts();
     createGroup(contact1);
-
-    contactInfoPage.checkInput("First name", contact1.getFirstName())
-            .checkInput("Last name", contact1.getLastName())
-            .checkInput("Middle name", contact1.getMiddleName())
-            .checkInput("Nickname", contact1.getNickname())
-            .checkInput("Email", contact1.getEmail())
-            .checkInput("Secondary email", contact1.getSecondaryEmail())
-            .checkInput("Phone number", contact1.getPhone())
-            .checkInput("Role", contact1.getRole())
-            .checkInput("Company", contact1.getCompany())
-            .checkInput("Job title", contact1.getJobTitle())
-            .checkInput("Comments", contact1.getComments());
+    checkContactField(contact1);
 
     openContactsPage();
     int afterCount = contactsPage.getCountOfContacts();
     assertThat("Количество групп увеличилось на единицу", afterCount, is(beforeCount + 1));
+    assertThat("Присутствует контакт с указанным именем", contactsPage.isContactExist(contactName), is(true));
+  }
+
+  @Test(description = "Редактирование контакта")
+  public void editContactTest() {
+    String contactName = contact1.getFirstName() + " " + contact1.getLastName();
+    if (!contactsPage.isContactExist(contactName)) {
+      createGroup(contact1);
+      openContactsPage();
+    }
+    int beforeCount = contactsPage.getCountOfContacts();
+
+    contactInfoPage = contactsPage.initEditingGroupByName(contactName);
+    ContactEditorPage contactEditorPage = contactInfoPage.editButtonClick();
+
+    fillContactFields(contact2, contactEditorPage);
+    contactInfoPage = contactEditorPage.submitButtonClick();
+    checkContactField(contact2);
+
+    openContactsPage();
+    int afterCount = contactsPage.getCountOfContacts();
+    assertThat("Количество групп не изменилось", afterCount, is(beforeCount));
+    assertThat("Присутствует контакт с указанным именем",
+            contactsPage.isContactExist(contact2.getFirstName() + " " + contact2.getLastName()), is(true));
   }
 
   @Test(description = "Удаление контакта")
@@ -98,7 +125,12 @@ public class ContactsTest extends TestBase {
 
   private void createGroup(Contact contact) {
     contactEditorPage = contactsPage.createButtonClick();
-    contactInfoPage = contactEditorPage.inputFirstName(contact.getFirstName())
+    fillContactFields(contact, contactEditorPage);
+    contactInfoPage = contactEditorPage.submitButtonClick();
+  }
+
+  private void fillContactFields(Contact contact, ContactEditorPage contactEditorPage) {
+    contactEditorPage.inputFirstName(contact.getFirstName())
             .inputLastName(contact.getLastName())
             .inputMiddleName(contact.getMiddleName())
             .inputEmail(contact.getEmail())
@@ -111,7 +143,20 @@ public class ContactsTest extends TestBase {
             .inputNickname(contact.getNickname())
             .inputComments(contact.getComments())
             .addContactDetails(contact.getContactDetails().get(0), 0)
-            .addContactDetails(contact.getContactDetails().get(1), 1)
-            .createButtonClick();
+            .addContactDetails(contact.getContactDetails().get(1), 1);
+  }
+
+  private void checkContactField(Contact contact) {
+    contactInfoPage.checkInput("First name", contact.getFirstName())
+            .checkInput("Last name", contact.getLastName())
+            .checkInput("Middle name", contact.getMiddleName())
+            .checkInput("Nickname", contact.getNickname())
+            .checkInput("Email", contact.getEmail())
+            .checkInput("Secondary email", contact.getSecondaryEmail())
+            .checkInput("Phone number", contact.getPhone())
+            .checkInput("Role", contact.getRole())
+            .checkInput("Company", contact.getCompany())
+            .checkInput("Job title", contact.getJobTitle())
+            .checkInput("Comments", contact.getComments());
   }
 }

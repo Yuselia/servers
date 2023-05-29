@@ -87,6 +87,18 @@ public class ContactsPage {
     return this;
   }
 
+  public ContactInfoPage initEditingGroupByName(String name) {
+    WebElement editingElement = null;
+    for (WebElement element: contacts) {
+      if (getValue(element, "Name").equals(name)) {
+        editingElement = element;
+        break;
+      }
+    }
+    editingElement.findElement(By.xpath("./td[contains(@data-label, 'Name')]/a")).click();
+    return new ContactInfoPage(driver, wait);
+  }
+
   public ContactsPage deleteButtonClick() {
     deleteButton.click();
     return this;

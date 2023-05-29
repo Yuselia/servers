@@ -1,14 +1,21 @@
 package com.servers.test.tests;
 
 import com.servers.test.TestBase;
+import com.servers.test.User;
 import com.servers.test.pages.AccountInfoPage;
 import com.servers.test.pages.LoginPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 public class LoginTest extends TestBase {
   public static LoginPage loginPage;
+  public static AccountInfoPage accountInfoPage;
+  public static User user = TestBase.user;
+  private static String errorMessage = "Incorrect email or password";
 
   @BeforeMethod
   public void setUp() {
@@ -24,16 +31,16 @@ public class LoginTest extends TestBase {
 
   @Test(description = "Успешный логин. Логаут")
   public void loginTest() {
-    AccountInfoPage accountInfoPage = login(loginPage);
+    accountInfoPage = login(loginPage, user);
     accountInfoPage.closeModalWindowButton();
     logout(accountInfoPage);
   }
 
-  /*@Test(description = "Unsuccessful login")
+  @Test(description = "Негативный тест логина")
   public void loginNTest() {
-    accountInfoPage = loginPage.inputLogin(login + "1")
-            .inputPassword(password)
-            .loginButtonClick();
-    accountInfoPage.inputFirstName("test");
-  } */
+    loginPage.inputLogin(TestBase.user.getLogin() + "1")
+            .inputPassword(TestBase.user.getPassword() + "1")
+            .incorrectLoginButtonClick();
+    assertThat("Корректное сообщение об ошибке", loginPage.getError(), is(errorMessage));
+  }
 }

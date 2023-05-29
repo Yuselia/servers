@@ -1,6 +1,5 @@
 package com.servers.test.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -29,6 +28,9 @@ public class LoginPage {
   @FindBy(css = "[type=submit]")
   private WebElement submitButton;
 
+  @FindBy(xpath = "//span[contains(@data-alert-level, 'error')]")
+  private WebElement allert;
+
   public LoginPage inputLogin(String login) {
     loginField.sendKeys(login);
     return this;
@@ -47,13 +49,17 @@ public class LoginPage {
 
   public LoginPage incorrectLoginButtonClick() {
     submitButton.click();
+    allert.click();
     return this;
+  }
+
+  public String getError() {
+    return allert.getText();
   }
 
   public LoginPage declineCookiesIfNeed() {
     if (declineCookiesButton.isDisplayed())
       declineCookiesButton.click();
-//    wait.until(ExpectedConditions.invisibilityOfElementLocated((By)declineCookiesButton));
     return this;
   }
 }

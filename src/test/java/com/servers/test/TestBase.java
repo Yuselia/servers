@@ -32,7 +32,7 @@ public class TestBase {
     driver.quit();
   }
 
-  protected AccountInfoPage login(LoginPage loginPage) {
+  protected AccountInfoPage login(LoginPage loginPage, User user) {
     AccountInfoPage accountInfoPage = loginPage.inputLogin(user.getLogin())
             .inputPassword(user.getPassword())
             .loginButtonClick();
