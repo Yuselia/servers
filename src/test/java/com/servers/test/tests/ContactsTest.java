@@ -49,6 +49,8 @@ public class ContactsTest extends TestBase {
           .setComments("1234567890-=!@#$%^*()_+\nNew comment")
           .setContactDetails(new Contact.ContactDetails("Cellphone", "123"))
           .setContactDetails(new Contact.ContactDetails("Fax", "+12345"));
+  private static String contactName1;
+  private static String contactName2;
 
   @BeforeClass
   public void setUp() {
@@ -56,6 +58,8 @@ public class ContactsTest extends TestBase {
     loginPage = new LoginPage(driver, wait);
     loginPage.declineCookiesIfNeed();
     login(loginPage, TestBase.user);
+    contactName1 = contact1.getFirstName() + " " + contact1.getLastName();
+    contactName2 = contact2.getFirstName() + " " + contact2.getLastName();
   }
 
   @BeforeMethod
@@ -67,6 +71,12 @@ public class ContactsTest extends TestBase {
 
   @AfterClass
   public void tearDown() {
+    if (contactsPage.isContactExist(contactName1)) {
+      deleteContact(contactName1);
+    }
+    if (contactsPage.isContactExist(contactName2)) {
+      deleteContact(contactName2);
+    }
     super.tearDown();
   }
 
@@ -85,14 +95,13 @@ public class ContactsTest extends TestBase {
 
   @Test(description = "Редактирование контакта")
   public void editContactTest() {
-    String contactName = contact1.getFirstName() + " " + contact1.getLastName();
-    if (!contactsPage.isContactExist(contactName)) {
+    if (!contactsPage.isContactExist(contactName1)) {
       createGroup(contact1);
       openContactsPage();
     }
     int beforeCount = contactsPage.getCountOfContacts();
 
-    contactInfoPage = contactsPage.initEditingGroupByName(contactName);
+    contactInfoPage = contactsPage.initEditingGroupByName(contactName1);
     ContactEditorPage contactEditorPage = contactInfoPage.editButtonClick();
 
     fillContactFields(contact2, contactEditorPage);
@@ -115,9 +124,7 @@ public class ContactsTest extends TestBase {
     }
     int beforeCount = contactsPage.getCountOfContacts();
 
-    contactsPage.initDeletingGroupByName(contactName)
-            .deleteButtonClick()
-            .refreshButtonClick();
+    deleteContact(contactName);
 
     int afterCount = contactsPage.getCountOfContacts();
     assertThat("Количество контактов уменьшилось на единицу", afterCount, is(beforeCount - 1));
@@ -159,5 +166,12 @@ public class ContactsTest extends TestBase {
             .checkInput("Job title", contact.getJobTitle())
             .checkInput("Comments", contact.getComments())
             .checkContactDetails(contact.getContactDetails());
+  }
+
+  private void deleteContact(String contactName) {
+    openContactsPage();
+    contactsPage.initDeletingGroupByName(contactName)
+            .deleteButtonClick()
+            .refreshButtonClick();
   }
 }

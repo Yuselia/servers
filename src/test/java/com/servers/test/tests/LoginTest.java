@@ -30,7 +30,7 @@ public class LoginTest extends TestBase {
   }
 
   @Test(description = "Успешный логин. Логаут")
-  public void loginTest() {
+  public void loginLogoutTest() {
     mainPage = login(loginPage, user);
     logout(mainPage);
   }

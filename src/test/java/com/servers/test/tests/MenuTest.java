@@ -31,5 +31,21 @@ public class MenuTest extends TestBase {
             .orderMenuClick()
             .cloudServersMenuClick()
             .cloudServerCreateAndManageMenuClick();
+    mainPage.snapshotsMenuClick()
+            .imagesMenuClick()
+            .volumesMenuClick()
+            .cloudStorageMenuClick()
+            .dnsMenuClick()
+            .loadBalancersMenuClick()
+            .firewallsMenuClick()
+            .kubernetesMenuClick()
+            .networksMenuClick()
+            .privateRacksClick()
+            .monitoringMenuClick()
+            .reportsMenuClick()
+            .requestsClick()
+            .sslCertificatesClick()
+            .profileMenuClick()
+            .billingClick();
   }
 }
