@@ -14,3 +14,10 @@ dependencies {
     compile 'org.seleniumhq.selenium:selenium-java:4.9.1'
     compile 'org.hamcrest:java-hamcrest:2.0.0.0'
 }
+
+test {
+    useTestNG() {
+        suites 'src/test/resources/testng.xml'
+    }
+    reports.html.destination = file("reports/test")
+}
