@@ -1,0 +1,25 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name = "Servers.com UI tests">
+    <test name = "LoginTest">
+        <classes>
+            <class name = "com.servers.test.tests.LoginTest"/>
+        </classes>
+    </test>
+    <test name = "ContactsTest">
+        <classes>
+            <class name = "com.servers.test.tests.ContactsTest"/>
+        </classes>
+    </test>
+    <test name = "CloudServerOrderTest">
+        <classes>
+            <class name = "com.servers.test.tests.CloudServerOrderTest"/>
+        </classes>
+    </test>
+    <test name = "MenuTest">
+        <classes>
+            <class name = "com.servers.test.tests.MenuTest"/>
+        </classes>
+    </test>
+</suite>
