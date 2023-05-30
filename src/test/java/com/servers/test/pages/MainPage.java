@@ -253,7 +253,7 @@ public class MainPage {
     return this;
   }
 
-  public MainPage privateRacksClick() {
+  public MainPage privateRacksMenuClick() {
     privateRacksMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/private-racks"));
     return this;
@@ -273,13 +273,13 @@ public class MainPage {
     return this;
   }
 
-  public MainPage requestsClick() {
+  public MainPage requestsMenuClick() {
     requestsMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/requests"));
     return this;
   }
 
-  public MainPage sslCertificatesClick() {
+  public MainPage sslCertificatesMenuClick() {
     sslMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/ssl"));
     return this;
@@ -296,7 +296,7 @@ public class MainPage {
     return this;
   }
 
-  public MainPage billingClick() {
+  public MainPage billingMenuClick() {
     billingMenu.click();
     assertThat(ordersMenu.isDisplayed(), is(true));
     assertThat(invoicesMenu.isDisplayed(), is(true));

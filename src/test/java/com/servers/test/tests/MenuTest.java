@@ -40,12 +40,12 @@ public class MenuTest extends TestBase {
             .firewallsMenuClick()
             .kubernetesMenuClick()
             .networksMenuClick()
-            .privateRacksClick()
+            .privateRacksMenuClick()
             .monitoringMenuClick()
             .reportsMenuClick()
-            .requestsClick()
-            .sslCertificatesClick()
+            .requestsMenuClick()
+            .sslCertificatesMenuClick()
             .profileMenuClick()
-            .billingClick();
+            .billingMenuClick();
   }
 }
