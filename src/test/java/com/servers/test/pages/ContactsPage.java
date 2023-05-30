@@ -1,6 +1,5 @@
 package com.servers.test.pages;
 
-import com.servers.test.Contact;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,10 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.servers.test.Role.Abuse;
 
 public class ContactsPage {
   protected WebDriver driver;
@@ -49,19 +45,6 @@ public class ContactsPage {
 
   public int getCountOfContacts() {
     return contacts.size();
-  }
-
-  public List<Contact> getContacts() {
-    List<Contact> contactList = new ArrayList<Contact>();
-    for (WebElement element: contacts) {
-      Contact contact = new Contact(getValue(element, "Name"), Abuse)
-              .setNickname(getValue(element, "Nickname"))
-              .setEmail(getValue(element, "Emails"))
-              .setSecondaryEmail(getValue(element, "Emails"))
-              .setPhone(getValue(element, "Phone"));
-      contactList.add(contact);
-    }
-    return contactList;
   }
 
   public boolean isContactExist(String contactName) {

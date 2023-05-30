@@ -50,12 +50,12 @@ public class MainPage {
   private WebElement imagesMenu;
 
   @FindBy(xpath = "//a[contains(@href, '/cloud-computing/block-storage')]")
-  private WebElement volumessMenu;
+  private WebElement volumesMenu;
 
   @FindBy(xpath = "//i[contains(@title, 'Cloud Storage')]")
   private WebElement cloudStorageMenu;
 
-  @FindBy(xpath = "//i[contains(@title, 'DNS'")
+  @FindBy(xpath = "//i[contains(@title, 'DNS')]")
   private WebElement dnsMenu;
 
   @FindBy(xpath = "//i[contains(@title, 'Load Balancers')]")
@@ -76,14 +76,26 @@ public class MainPage {
   @FindBy(xpath = "//a[contains(@href, '/networks/l2')]")
   private WebElement segmentsMenu;
 
-  @FindBy(xpath = "//i[contains(@title, 'Private Racks'")
+  @FindBy(xpath = "//i[contains(@title, 'Private Racks')]")
   private WebElement privateRacksMenu;
 
   @FindBy(xpath = "//i[contains(@title, 'Monitoring')]")
   private WebElement monitoringMenu;
 
+  @FindBy(xpath = "//a[contains(@href, '/monitoring/healthchecks')]")
+  private WebElement healthchecksMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/monitoring/notifications')]")
+  private WebElement mnotificationsMenu;
+
   @FindBy(xpath = "//i[contains(@title, 'Reports')]")
   private WebElement reportsMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/cloud-storage/reports')]")
+  private WebElement cloudStorageReportsMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/cloud-computing/reports')]")
+  private WebElement cloudComputingReportsMenu;
 
   @FindBy(xpath = "//i[contains(@title, 'Requests')]")
   private WebElement requestsMenu;
@@ -94,8 +106,44 @@ public class MainPage {
   @FindBy(xpath = "//i[contains(@title, 'Profile')]")
   private WebElement profileMenu;
 
+  @FindBy(xpath = "//a[contains(@href, '/profile/info')]")
+  private WebElement accountMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/profile/contacts')]")
+  private WebElement contactsMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/profile/groups')]")
+  private WebElement groupsMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/profile/sshkeys')]")
+  private WebElement sshkeysMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/profile/vpn')]")
+  private WebElement vpnMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/profile/api-tokens')]")
+  private WebElement apiTokentsMenu;
+
   @FindBy(xpath = "//i[contains(@title, 'Billing')]")
   private WebElement billingMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/billing/orders')]")
+  private WebElement ordersMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/billing/invoices')]")
+  private WebElement invoicesMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/billing/group-invoices')]")
+  private WebElement groupInvoicesMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/billing/statement')]")
+  private WebElement statementMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/payment/methods')]")
+  private WebElement paymentDetailsMenu;
+
+  @FindBy(xpath = "//a[contains(@href, '/payment/pay')]")
+  private WebElement paymentPayMenu;
 
   @FindBy(xpath = "//div[contains(@aria-label, 'Please fill your account info')]/div[1]/header/button")
   private WebElement closeModalWindowButton;
@@ -140,7 +188,7 @@ public class MainPage {
     assertThat(cloudServerCreateAndManageMenu.isDisplayed(), is(true));
     assertThat(snapshotsMenu.isDisplayed(), is(true));
     assertThat(imagesMenu.isDisplayed(), is(true));
-    assertThat(volumessMenu.isDisplayed(), is(true));
+    assertThat(volumesMenu.isDisplayed(), is(true));
     return this;
   }
 
@@ -148,6 +196,115 @@ public class MainPage {
     cloudServerCreateAndManageMenu.click();
     wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h3/span[text() = 'Cloud Servers']")));
     return new CloudServers(driver, wait);
+  }
+
+  public MainPage snapshotsMenuClick() {
+    snapshotsMenu.click();
+    wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/cloud-computing/snapshots"));
+    return this;
+  }
+
+  public MainPage imagesMenuClick() {
+    imagesMenu.click();
+    wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/cloud-computing/images"));
+    return this;
+  }
+
+  public MainPage volumesMenuClick() {
+    volumesMenu.click();
+    wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/cloud-computing/block-storage/info"));
+    return this;
+  }
+
+  public MainPage cloudStorageMenuClick() {
+    cloudStorageMenu.click();
+    wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/cloud-storage/0/info"));
+    return this;
+  }
+
+  public MainPage dnsMenuClick() {
+    dnsMenu.click();
+    wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/dns"));
+    return this;
+  }
+
+  public MainPage loadBalancersMenuClick() {
+    loadBalancersMenu.click();
+    wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/lb"));
+    return this;
+  }
+
+  public MainPage firewallsMenuClick() {
+    firewallsMenu.click();
+    wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/firewalls"));
+    return this;
+  }
+
+  public MainPage kubernetesMenuClick() {
+    kubernetesMenu.click();
+    wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/k8s"));
+    return this;
+  }
+
+  public MainPage networksMenuClick() {
+    networksMenu.click();
+    assertThat(directConnectMenu.isDisplayed(), is(true));
+    assertThat(segmentsMenu.isDisplayed(), is(true));
+    return this;
+  }
+
+  public MainPage privateRacksClick() {
+    privateRacksMenu.click();
+    wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/private-racks"));
+    return this;
+  }
+
+  public MainPage monitoringMenuClick() {
+    monitoringMenu.click();
+    assertThat(healthchecksMenu.isDisplayed(), is(true));
+    assertThat(mnotificationsMenu.isDisplayed(), is(true));
+    return this;
+  }
+
+  public MainPage reportsMenuClick() {
+    reportsMenu.click();
+    assertThat(cloudStorageReportsMenu.isDisplayed(), is(true));
+    assertThat(cloudComputingReportsMenu.isDisplayed(), is(true));
+    return this;
+  }
+
+  public MainPage requestsClick() {
+    requestsMenu.click();
+    wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/requests"));
+    return this;
+  }
+
+  public MainPage sslCertificatesClick() {
+    sslMenu.click();
+    wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/ssl"));
+    return this;
+  }
+
+  public MainPage profileMenuClick() {
+    profileMenu.click();
+    assertThat(accountMenu.isDisplayed(), is(true));
+    assertThat(contactsMenu.isDisplayed(), is(true));
+    assertThat(groupsMenu.isDisplayed(), is(true));
+    assertThat(sshkeysMenu.isDisplayed(), is(true));
+    assertThat(vpnMenu.isDisplayed(), is(true));
+    assertThat(apiTokentsMenu.isDisplayed(), is(true));
+    return this;
+  }
+
+  public MainPage billingClick() {
+    billingMenu.click();
+    assertThat(ordersMenu.isDisplayed(), is(true));
+    assertThat(invoicesMenu.isDisplayed(), is(true));
+    assertThat(groupInvoicesMenu.isDisplayed(), is(true));
+    assertThat(statementMenu.isDisplayed(), is(true));
+    assertThat(paymentDetailsMenu.isDisplayed(), is(true));
+    assertThat(paymentPayMenu.isDisplayed(), is(true));
+    return this;
   }
 
   public MainPage closeModalWindowButton() {
