@@ -19,5 +19,5 @@ test {
     useTestNG() {
         suites 'src/test/resources/testng.xml'
     }
-    //reports.html.destination = file("reports/test")
+    reports.html.destination = file("reports/test")
 }
