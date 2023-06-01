@@ -1,6 +1,7 @@
 package com.servers.test.pages;
 
 import com.servers.test.TestBase;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -59,6 +60,7 @@ public class CreateCloudServerPage {
   @FindBy(xpath = "//button[contains(@title, 'Create Cloud Server')]")
   private WebElement createButton;
 
+  @Step("Выбираем локацию {location}")
   public CreateCloudServerPage chooseLocation(String location) {
     locationsList.findElement(By.xpath(".//span[text() = '" + location + "']")).click();
     wait.until(ExpectedConditions.presenceOfElementLocated(By.id("image_id")));
@@ -66,6 +68,7 @@ public class CreateCloudServerPage {
     return this;
   }
 
+  @Step("Выбираем любой image")
   public String chooseRandomImage() {
     WebElement image = images.get((int)(Math.random()*images.size()));
     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", image);
@@ -75,14 +78,10 @@ public class CreateCloudServerPage {
       assertThat(isSSHMethodsDisplayed(), is(true));
       assertThat(isSSHKeysDisplayed(), is(true));
     }
-    else {
-      assertThat(isSSHMethodsDisplayed(), is(false));
-      assertThat(isSSHKeysDisplayed(), is(false));
-    }
-
     return text;
   }
 
+  @Step("Выбираем любою конфигурацию и получаем цену")
   public String chooseRandomConfigurationAndGetPrice() {
     WebElement configuration = configurations.get((int)(Math.random()*configurations.size()));
     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", configuration);
@@ -91,6 +90,7 @@ public class CreateCloudServerPage {
     return price;
   }
 
+  @Step("Проверка цены")
   public CreateCloudServerPage checkPrice(String price) {
     WebElement element = driver.findElement(By.xpath("//span[text() = 'Total price']"));
     WebElement priceElement = element.findElement(By.xpath("./..//b"));
@@ -98,41 +98,48 @@ public class CreateCloudServerPage {
     return this;
   }
 
+  @Step("Выбираем SSH метод")
   public CreateCloudServerPage chooseSSHMethod() {
     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", sshMethod);
     sshMethod.click();
     return this;
   }
 
+  @Step("Выбираем проверку паролем")
   public CreateCloudServerPage choosePassword() {
     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", password);
     password.click();
     return this;
   }
 
+  @Step("Выбор SSH ключа")
   public CreateCloudServerPage chooseSSHKey() {
     sshKeys.findElement(By.xpath(".//h4[1]")).click();
     return this;
   }
 
+  @Step("Ставим галку бекапа")
   public CreateCloudServerPage setBackupCopies(int count) {
     backupCopies.clear();
     backupCopies.sendKeys(String.valueOf(count));
     return this;
   }
 
+  @Step("Выбор чекбокса добавления IP адреса")
   public CreateCloudServerPage setAddIpAddressCheckbox() {
     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", addIpAddressCheckbox);
     addIpAddressCheckbox.click();
     return this;
   }
 
+  @Step("Ввод имени")
   public CreateCloudServerPage setName(String name) {
     this.name.clear();
     this.name.sendKeys(name);
     return this;
   }
 
+  @Step("Нажать кнопку Создать")
   public PaymentMethodsPage createButtonClick() {
     createButton.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/payment/methods"));

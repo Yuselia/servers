@@ -171,7 +171,6 @@ public class ContactsTest extends TestBase {
   private void deleteContact(String contactName) {
     openContactsPage();
     contactsPage.initDeletingGroupByName(contactName)
-            .deleteButtonClick()
-            .refreshButtonClick();
+            .deleteButtonClick();
   }
 }

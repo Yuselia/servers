@@ -1,6 +1,7 @@
 package com.servers.test.pages;
 
 import com.servers.test.Contact;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -67,42 +68,49 @@ public class ContactEditorPage {
   @FindBy(xpath = "//button[contains(@type, 'submit')]")
   private WebElement submitButton;
 
+  @Step("Ввод имени: {firstName}")
   public ContactEditorPage inputFirstName(String firstName) {
     fname.clear();
     fname.sendKeys(firstName);
     return this;
   }
 
+  @Step("Ввод фамилии: {lastName}")
   public ContactEditorPage inputLastName(String lastName) {
     lname.clear();
     lname.sendKeys(lastName);
     return this;
   }
 
+  @Step("Ввод отчества: {middlename}")
   public ContactEditorPage inputMiddleName(String middlename) {
     this.middlename.clear();
     this.middlename.sendKeys(middlename);
     return this;
   }
 
+  @Step("Ввод емейла: {email}")
   public ContactEditorPage inputEmail(String email) {
     this.email.clear();
     this.email.sendKeys(email);
     return this;
   }
 
+  @Step("Ввод второго емейла: {email}")
   public ContactEditorPage inputSecondaryEmail(String email) {
     email2.clear();
     email2.sendKeys(email);
     return this;
   }
 
+  @Step("Ввод телефона: {phone}")
   public ContactEditorPage inputPhone(String phone) {
     this.phone.clear();
     this.phone.sendKeys(phone);
     return this;
   }
 
+  @Step("Выбор роли: {role}")
   public ContactEditorPage setRole(String role) {
     List<WebElement> elements = this.role.findElements(By.xpath(".//child::input"));
     for (int i = 1; i < elements.size(); i ++) {
@@ -117,42 +125,49 @@ public class ContactEditorPage {
     return this;
   }
 
+  @Step("Ввод компании: {company}")
   public ContactEditorPage inputCompany(String company) {
     this.company.clear();
     this.company.sendKeys(company);
     return this;
   }
 
+  @Step("Ввод Job Title: {title}")
   public ContactEditorPage inputJobTitle(String title) {
     this.jobTitle.clear();
     this.jobTitle.sendKeys(title);
     return this;
   }
 
+  @Step("Ввод Job Role: {jobRole}")
   public ContactEditorPage inputJobRole(String jobRole) {
     this.jobRole.clear();
     this.jobRole.sendKeys(jobRole);
     return this;
   }
 
+  @Step("Ввод никнейма: {nickname}")
   public ContactEditorPage inputNickname(String nickname) {
     this.nickname.clear();
     this.nickname.sendKeys(nickname);
     return this;
   }
 
+  @Step("Ввод комментария: {comments}")
   public ContactEditorPage inputComments(String comments) {
     this.comments.clear();
     this.comments.sendKeys(comments);
     return this;
   }
 
+  @Step("Нажать кнопку добавления деталей контакта")
   public ContactEditorPage addDetailsButtonClick() {
     ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", addDetailsButton);
     addDetailsButton.click();
     return this;
   }
 
+  @Step("Добавить детали контакта")
   public ContactEditorPage addContactDetails(Contact.ContactDetails contactDetails, int index) {
     addDetailsButtonClick();
     WebElement contactNameSelectButton = contactNameSelectButtons.get(index);
@@ -166,6 +181,7 @@ public class ContactEditorPage {
     return this;
   }
 
+  @Step("Нажать кнопку Submit")
   public ContactInfoPage submitButtonClick() {
     submitButton.click();
     wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[name=fname]")));

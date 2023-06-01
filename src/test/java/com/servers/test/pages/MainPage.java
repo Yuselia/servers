@@ -1,6 +1,7 @@
 package com.servers.test.pages;
 
 import com.servers.test.TestBase;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -148,6 +149,7 @@ public class MainPage {
   @FindBy(xpath = "//div[contains(@aria-label, 'Please fill your account info')]/div[1]/header/button")
   private WebElement closeModalWindowButton;
 
+  @Step("Проверка имени аккаунта")
   public MainPage checkAccountName(String accountName) {
     assertThat("Отображается аккаунт пользователя", this.account.getText(), is(accountName));
     return this;
@@ -158,11 +160,13 @@ public class MainPage {
     return this;
   }
 
+  @Step("Logout")
   public LoginPage logoutButtonClick() {
     logoutButton.click();
     return new LoginPage(driver, wait);
   }
 
+  @Step("Клик по меню Dedicated Servers")
   public MainPage dedicatedServersMenuClick() {
     dedicatedServersMenu.click();
     manageMenu.isDisplayed();
@@ -170,18 +174,21 @@ public class MainPage {
     return this;
   }
 
+  @Step("Клик по меню Manage")
   public MainPage manageMenuClick() {
     manageMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/servers/my"));
     return this;
   }
 
+  @Step("Клик по меню Order")
   public MainPage orderMenuClick() {
     orderMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/servers/order"));
     return this;
   }
 
+  @Step("Клик по меню Cloud Servers")
   public MainPage cloudServersMenuClick() {
     cloudServersMenu.click();
     assertThat(cloudServerCreateAndManageMenu.isDisplayed(), is(true));
@@ -192,60 +199,70 @@ public class MainPage {
     return this;
   }
 
+  @Step("Клик по меню Create & Manage")
   public CloudServers cloudServerCreateAndManageMenuClick() {
     cloudServerCreateAndManageMenu.click();
     wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h3/span[text() = 'Cloud Servers']")));
     return new CloudServers(driver, wait);
   }
 
+  @Step("Клик по меню Snapshots & Backups")
   public MainPage snapshotsMenuClick() {
     snapshotsMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/cloud-computing/snapshots"));
     return this;
   }
 
+  @Step("Клик по меню Images")
   public MainPage imagesMenuClick() {
     imagesMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/cloud-computing/images"));
     return this;
   }
 
+  @Step("Клик по меню Volumes")
   public MainPage volumesMenuClick() {
     volumesMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/cloud-computing/block-storage/info"));
     return this;
   }
 
+  @Step("Клик по меню Cloud Storage")
   public MainPage cloudStorageMenuClick() {
     cloudStorageMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/cloud-storage/0/info"));
     return this;
   }
 
+  @Step("Клик по меню DNS")
   public MainPage dnsMenuClick() {
     dnsMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/dns"));
     return this;
   }
 
+  @Step("Клик по меню Load Balancers")
   public MainPage loadBalancersMenuClick() {
     loadBalancersMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/lb"));
     return this;
   }
 
+  @Step("Клик по меню Firewalls")
   public MainPage firewallsMenuClick() {
     firewallsMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/firewalls"));
     return this;
   }
 
+  @Step("Клик по меню Kubernetes")
   public MainPage kubernetesMenuClick() {
     kubernetesMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/k8s"));
     return this;
   }
 
+  @Step("Клик по меню Networks")
   public MainPage networksMenuClick() {
     networksMenu.click();
     assertThat(directConnectMenu.isDisplayed(), is(true));
@@ -253,12 +270,14 @@ public class MainPage {
     return this;
   }
 
+  @Step("Клик по меню Private Racks")
   public MainPage privateRacksMenuClick() {
     privateRacksMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/private-racks"));
     return this;
   }
 
+  @Step("Клик по меню Monitoring")
   public MainPage monitoringMenuClick() {
     monitoringMenu.click();
     assertThat(healthchecksMenu.isDisplayed(), is(true));
@@ -266,6 +285,7 @@ public class MainPage {
     return this;
   }
 
+  @Step("Клик по меню Reports")
   public MainPage reportsMenuClick() {
     reportsMenu.click();
     assertThat(cloudStorageReportsMenu.isDisplayed(), is(true));
@@ -273,18 +293,21 @@ public class MainPage {
     return this;
   }
 
+  @Step("Клик по меню Requests")
   public MainPage requestsMenuClick() {
     requestsMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/requests"));
     return this;
   }
 
+  @Step("Клик по меню SSL certificates")
   public MainPage sslCertificatesMenuClick() {
     sslMenu.click();
     wait.until(ExpectedConditions.urlToBe(TestBase.main_url + "/ssl"));
     return this;
   }
 
+  @Step("Клик по меню Profile")
   public MainPage profileMenuClick() {
     profileMenu.click();
     assertThat(accountMenu.isDisplayed(), is(true));
@@ -296,6 +319,7 @@ public class MainPage {
     return this;
   }
 
+  @Step("Клик по меню billing")
   public MainPage billingMenuClick() {
     billingMenu.click();
     assertThat(ordersMenu.isDisplayed(), is(true));

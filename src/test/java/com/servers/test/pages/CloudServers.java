@@ -1,5 +1,6 @@
 package com.servers.test.pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +22,7 @@ public class CloudServers {
   @FindBy(xpath = "//a[contains(@title, 'Create server')]")
   private WebElement createButton;
 
+  @Step("Нажать кнопку Создать")
   public CreateCloudServerPage createButtonClick() {
     createButton.click();
     wait.until(ExpectedConditions.presenceOfElementLocated(By.id("location_id")));

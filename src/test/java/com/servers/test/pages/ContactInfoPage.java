@@ -1,6 +1,7 @@
 package com.servers.test.pages;
 
 import com.servers.test.Contact;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,11 +30,13 @@ public class ContactInfoPage {
   @FindBy(xpath = "//button[contains(@title, 'Edit')]")
   private WebElement editButton;
 
+  @Step("Нажать кнопку редактирования")
   public ContactEditorPage editButtonClick() {
     editButton.click();
     return new ContactEditorPage(driver, wait);
   }
 
+  @Step("Проверка поля: {name}")
   public ContactInfoPage checkInput(String name, String value) {
     WebElement element = driver.findElement(By.xpath("//*[text() = '" + name + "']/following-sibling::div"));
     if (value!=null)
@@ -43,6 +46,7 @@ public class ContactInfoPage {
     return this;
   }
 
+  @Step("Проверка доп.информации контакта")
   public ContactInfoPage checkContactDetails(List<Contact.ContactDetails> contactDetails) {
     for (Contact.ContactDetails cdetails:
             contactDetails) {

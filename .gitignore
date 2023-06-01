@@ -21,3 +21,7 @@ gradle-app.setting
 .gradle
 .idea
 reports
+build
+.allire
+allure-results
+out

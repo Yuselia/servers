@@ -3,6 +3,8 @@ package com.servers.test;
 import com.servers.test.pages.LoginPage;
 import com.servers.test.pages.MainPage;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -20,7 +22,10 @@ public class TestBase {
   protected static User user = new User("yuselia+ask_ev@yandex.ru", "TestPassword!@#$");
 
   protected void setUp() {
-    driver = new FirefoxDriver();
+    System.setProperty("webdriver.chrome.driver", "./src/main/resources/chromedriver");
+    ChromeOptions chromeOptions = new ChromeOptions();
+    //driver = new FirefoxDriver();
+    driver = new ChromeDriver(chromeOptions);
     wait = new WebDriverWait(driver, Duration. ofSeconds(timeout));
     driver.manage().window().maximize();
     driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
