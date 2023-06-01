@@ -26,7 +26,8 @@ UI автотесты проверяют сайт: https://portal.servers.com/
 
 4. Для генерации и просмотра результатов тестирования установите Allure.
 Установите инструмент командной строки, инструкция: https://www.npmjs.com/package/allure-commandline
-npm install -g allure-commandline --save-dev
+Команда:
+`npm install -g allure-commandline --save-dev`
 
 # Запуск тестов
 
